@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="edu.umd.cmsc436.tappingtest.Practice">
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Hand Tapping"
+        android:layout_centerInParent="true"
+        android:id="@+id/hand_practice_btn"
+        android:onClick="handPractice"/>
+
+    <Button
+        android:layout_below="@+id/hand_practice_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Foot Tapping"
+        android:id="@+id/foot_practice_btn"
+        android:onClick="footPractice"/>
+</RelativeLayout>

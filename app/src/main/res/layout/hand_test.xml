@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="edu.umd.cmsc436.tappingtest.TappingTest">
+
+    <Button
+        android:layout_weight="0.2"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignTop="@+id/question_mark"
+        android:layout_alignBottom="@+id/question_mark"
+        android:onClick="restart"
+        android:id="@+id/restart_btn"
+        android:text="Restart Test"/>
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:onClick="questionMark"
+        android:id="@+id/question_mark"
+        android:src="@drawable/question_mark"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:id="@+id/timeLeft"
+        android:textSize="20dp"
+        android:layout_centerInParent="true"
+        android:layout_below="@+id/restart_btn"
+        android:text="Begin Tapping When Ready"/>
+
+    <Button
+        android:id="@+id/tap"
+        android:layout_width="1in"
+        android:layout_height="1in"
+        android:text="Tap"
+        android:layout_marginTop="60dp"
+        android:background="@drawable/roundedbutton"
+        android:layout_gravity="center"
+        android:layout_centerInParent="true"
+        android:layout_below="@id/timeLeft"
+        android:onClick="tapButton" />
+
+</RelativeLayout>
