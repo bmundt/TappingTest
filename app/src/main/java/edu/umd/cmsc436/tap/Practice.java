@@ -1,13 +1,12 @@
-package edu.umd.cmsc436.tappingtest;
+package edu.umd.cmsc436.tap;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.app.WindowDecorActionBar;
 import android.view.View;
 
 import edu.umd.cmsc436.sheets.Sheets;
-import edu.umd.cmsc436.sheets.Sheets.TestType;
+import edu.umd.cmsc436.tap.R;
 
 public class Practice extends AppCompatActivity {
 

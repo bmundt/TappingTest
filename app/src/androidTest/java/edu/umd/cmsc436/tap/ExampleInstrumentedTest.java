@@ -1,4 +1,4 @@
-package edu.umd.cmsc436.tappingtest;
+package edu.umd.cmsc436.tap;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

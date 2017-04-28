@@ -1,4 +1,4 @@
-package edu.umd.cmsc436.tappingtest;
+package edu.umd.cmsc436.tap;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import edu.umd.cmsc436.sheets.Sheets;
+import edu.umd.cmsc436.tap.R;
 
 import static edu.umd.cmsc436.sheets.Sheets.TestType.LF_TAP;
 import static edu.umd.cmsc436.sheets.Sheets.TestType.LH_TAP;

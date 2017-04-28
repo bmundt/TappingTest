@@ -1,17 +1,11 @@
-package edu.umd.cmsc436.tappingtest;
+package edu.umd.cmsc436.tap;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.TextView;
 
-import edu.umd.cmsc436.sheets.Sheets;
-
-import static edu.umd.cmsc436.sheets.Sheets.TestType.*;
+import edu.umd.cmsc436.tap.R;
 
 public class MainActivity extends AppCompatActivity {
 

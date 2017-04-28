@@ -1,8 +1,10 @@
-package edu.umd.cmsc436.tappingtest;
+package edu.umd.cmsc436.tap;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+
+import edu.umd.cmsc436.tap.R;
 
 public class Instructions extends AppCompatActivity {
 

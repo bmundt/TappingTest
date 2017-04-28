@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="edu.umd.cmsc436.tappingtest.TappingTest">
+    tools:context="edu.umd.cmsc436.tappingtest.edu.umd.cmsc436.tap.TappingTest">
 
     <Button
         android:layout_weight="0.2"
