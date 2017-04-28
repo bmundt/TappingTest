@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="edu.umd.cmsc436.tappingtest.edu.umd.cmsc436.tap.TappingTest">
+
+    tools:context="edu.umd.cmsc436.tap.TappingTest">
 
     <Button
         android:layout_weight="0.2"
@@ -37,14 +38,12 @@
 
     <Button
         android:id="@+id/tap"
-        android:layout_width="1in"
-        android:layout_height="1in"
+        android:layout_height="match_parent"
+        android:layout_width="150dp"
         android:text="Tap"
-        android:layout_marginTop="60dp"
-        android:background="@drawable/roundedbutton"
-        android:layout_gravity="center"
-        android:layout_centerInParent="true"
-        android:layout_below="@id/timeLeft"
-        android:onClick="tapButton" />
+        android:onClick="tapButton"
+        android:layout_alignParentBottom="true"
+        android:layout_below="@+id/timeLeft"
+        android:layout_alignParentEnd="true" />
 
 </RelativeLayout>

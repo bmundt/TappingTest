@@ -7,10 +7,10 @@ import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import edu.umd.cmsc436.sheets.Sheets;
-import edu.umd.cmsc436.tap.R;
 
 import static edu.umd.cmsc436.sheets.Sheets.TestType.LF_TAP;
 import static edu.umd.cmsc436.sheets.Sheets.TestType.LH_TAP;
@@ -28,6 +28,7 @@ public class TappingTest extends AppCompatActivity {
     private int taps;
     private boolean timerStarted;
     private long secondsRemaining;
+    ImageButton questionMark;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,14 +36,18 @@ public class TappingTest extends AppCompatActivity {
         setContentView(R.layout.activity_tapping_test);
 
         intent = getIntent();
-        TYPE = (Sheets.TestType) intent.getSerializableExtra("appendage");
+        TYPE = (Sheets.TestType) intent.getSerializableExtra("Appendage");
 
-        if (TYPE == LH_TAP || TYPE == RH_TAP)
-            setContentView(R.layout.hand_test);
-        else if (TYPE == LF_TAP || TYPE == RF_TAP)
+        if (TYPE == Sheets.TestType.LH_TAP)  {
+            setContentView(R.layout.left_hand_test);
+        } else if (TYPE == Sheets.TestType.RH_TAP) {
+            setContentView(R.layout.right_hand_test);
+        } else if (TYPE == Sheets.TestType.LF_TAP || TYPE == Sheets.TestType.RF_TAP) {
             setContentView(R.layout.foot_test);
+        }
 
         timeLeft = (TextView) findViewById(R.id.timeLeft);
+        questionMark = (ImageButton) findViewById(R.id.question_mark);
     }
 
     @Override
@@ -90,6 +95,7 @@ public class TappingTest extends AppCompatActivity {
 
     protected void tapButton(View v) {
         if (!timerStarted) { // only start timer if not already started
+            questionMark.setVisibility(View.INVISIBLE);
             timer.start();
             taps++;
             timerStarted = true;
@@ -107,9 +113,7 @@ public class TappingTest extends AppCompatActivity {
         instructions.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        Intent intent = new Intent(TappingTest.this, TappingTest.class);
-                        startActivity(intent);
-                        dialog.dismiss();
+                        onResume();
                     }
                 });
         instructions.show();

@@ -4,7 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="edu.umd.cmsc436.tappingtest.edu.umd.cmsc436.tap.Practice">
+    tools:context="edu.umd.cmsc436.tap.Practice">
+
+    <TextView
+        android:textSize="40dp"
+        android:gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Please choose which test you would like to practice"/>
 
     <Button
         android:layout_width="match_parent"
