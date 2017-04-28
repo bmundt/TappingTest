@@ -12,25 +12,28 @@
         <activity android:name="edu.umd.cmsc436.tap.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity android:name="edu.umd.cmsc436.tap.Instructions">
             <intent-filter>
                 <action android:name="edu.umd.cmsc436.tap.action.HELP" />
                 <category android:name="android.intent.category.DEFAULT"/>
+                <!--category android:name="android.intent.category.DEFAULT"/-->
             </intent-filter>
         </activity>
         <activity android:name="edu.umd.cmsc436.tap.Practice">
             <intent-filter>
                 <action android:name="edu.umd.cmsc436.tap.action.PRACTICE" />
-
-                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.DEFAULT"/>
+                <!--category android:name="android.intent.category.DEFAULT" /-->
             </intent-filter>
         </activity>
         <activity android:name="edu.umd.cmsc436.tap.TappingTest">
             <intent-filter>
                 <action android:name="edu.umd.cmsc436.tap.action.TRIAL" />
                 <category android:name="android.intent.category.DEFAULT"/>
+                <!--category android:name="android.intent.category.DEFAULT"/-->
             </intent-filter>
         </activity>
     </application>
