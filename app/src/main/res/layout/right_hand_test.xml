@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
 
-    tools:context="edu.umd.cmsc436.tap.TappingTest">
+    tools:context="edu.umd.cmsc436.tap.TappingPractice">
 
     <Button
         android:layout_weight="0.2"

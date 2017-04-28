@@ -1,14 +1,10 @@
 package edu.umd.cmsc436.tap;
 
-import android.app.Activity;
-import android.content.Intent;
-import android.os.Bundle;
-import edu.umd.cmsc436.sheets.Sheets;
-
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.CountDownTimer;
+import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
@@ -16,20 +12,11 @@ import android.widget.TextView;
 
 import edu.umd.cmsc436.sheets.Sheets;
 
-import static edu.umd.cmsc436.frontendhelper.TrialMode.getAppendage;
-import static edu.umd.cmsc436.frontendhelper.TrialMode.getPatientId;
-import static edu.umd.cmsc436.frontendhelper.TrialMode.getTrialNum;
-import static edu.umd.cmsc436.frontendhelper.TrialMode.getTrialOutOf;
+public class TappingPractice extends AppCompatActivity {
 
-
-public class TappingTest extends Activity {
-
-    private String patientId;
-    private Sheets.TestType appendage;
-    private int trialNum;
-    private int trialOutOf;
 
     private Intent intent;
+    private Sheets.TestType TYPE;
     private TextView timeLeft;
     private CountDownTimer timer;
     private int totalTaps;
@@ -44,17 +31,13 @@ public class TappingTest extends Activity {
         setContentView(R.layout.activity_tapping_practice);
 
         intent = getIntent();
-        appendage= getAppendage(intent);
-        trialNum = getTrialNum(intent);
-        trialOutOf = getTrialOutOf(intent);
-        patientId = getPatientId(intent);
+        TYPE = (Sheets.TestType) intent.getSerializableExtra("Appendage");
 
-
-        if (appendage == Sheets.TestType.LH_TAP)  {
+        if (TYPE == Sheets.TestType.LH_TAP)  {
             setContentView(R.layout.left_hand_test);
-        } else if (appendage == Sheets.TestType.RH_TAP) {
+        } else if (TYPE == Sheets.TestType.RH_TAP) {
             setContentView(R.layout.right_hand_test);
-        } else if (appendage == Sheets.TestType.LF_TAP || appendage == Sheets.TestType.RF_TAP) {
+        } else if (TYPE == Sheets.TestType.LF_TAP || TYPE == Sheets.TestType.RF_TAP) {
             setContentView(R.layout.foot_test);
         }
 
@@ -117,11 +100,11 @@ public class TappingTest extends Activity {
     }
 
     protected void questionMark(View v) {
-        AlertDialog instructions = new AlertDialog.Builder(TappingTest.this).create();
+        AlertDialog instructions = new AlertDialog.Builder(TappingPractice.this).create();
         instructions.setTitle("Instructions");
         instructions.setMessage("Place the phone on a level surface\n" +
-                "Begin Tapping the button in the middle of the screen when ready\n" +
-                "A Timer will start on the first tap, and you will have 10 seconds to tap as many times as possible");
+        "Begin Tapping the button in the middle of the screen when ready\n" +
+        "A Timer will start on the first tap, and you will have 10 seconds to tap as many times as possible");
         instructions.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
@@ -132,7 +115,7 @@ public class TappingTest extends Activity {
     }
 
     protected void restart(View v) {
-        AlertDialog restart = new AlertDialog.Builder(TappingTest.this).create();
+        AlertDialog restart = new AlertDialog.Builder(TappingPractice.this).create();
         restart.setTitle("Restart Test");
         restart.setMessage("Would you like to restart the test?");
         restart.setButton(AlertDialog.BUTTON_NEUTRAL, "YES",
@@ -140,7 +123,7 @@ public class TappingTest extends Activity {
                     public void onClick(DialogInterface dialog, int which) {
                         timer.cancel();
                         timerStarted = false;
-                        Intent intent = new Intent(TappingTest.this, TappingPractice.class);
+                        Intent intent = new Intent(TappingPractice.this, TappingPractice.class);
                         intent.putExtra("appendage", (Sheets.TestType) getIntent().getSerializableExtra("appendage"));
                         startActivity(intent);
                         dialog.dismiss();
@@ -149,7 +132,7 @@ public class TappingTest extends Activity {
         restart.setButton(AlertDialog.BUTTON_NEUTRAL, "NO",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        Intent intent = new Intent(TappingTest.this, TappingPractice.class);
+                        Intent intent = new Intent(TappingPractice.this, TappingPractice.class);
                         intent.putExtra("appendage", (Sheets.TestType) getIntent().getSerializableExtra("appendage"));
                         startActivity(intent);
                         dialog.dismiss();

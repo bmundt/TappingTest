@@ -9,33 +9,38 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="edu.umd.cmsc436.tap.MainActivity">
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="edu.umd.cmsc436.tap.Instructions">
+        <activity android:name=".Instructions">
             <intent-filter>
                 <action android:name="edu.umd.cmsc436.tap.action.HELP" />
-                <category android:name="android.intent.category.DEFAULT"/>
-                <!--category android:name="android.intent.category.DEFAULT"/-->
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <!-- category android:name="android.intent.category.DEFAULT"/ -->
             </intent-filter>
         </activity>
-        <activity android:name="edu.umd.cmsc436.tap.Practice">
+        <activity android:name=".Practice">
             <intent-filter>
                 <action android:name="edu.umd.cmsc436.tap.action.PRACTICE" />
-                <category android:name="android.intent.category.DEFAULT"/>
-                <!--category android:name="android.intent.category.DEFAULT" /-->
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <!-- category android:name="android.intent.category.DEFAULT" / -->
             </intent-filter>
         </activity>
-        <activity android:name="edu.umd.cmsc436.tap.TappingTest">
+        <activity android:name=".TappingPractice">
             <intent-filter>
                 <action android:name="edu.umd.cmsc436.tap.action.TRIAL" />
-                <category android:name="android.intent.category.DEFAULT"/>
-                <!--category android:name="android.intent.category.DEFAULT"/-->
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <!-- category android:name="android.intent.category.DEFAULT"/ -->
             </intent-filter>
         </activity>
+        <activity android:name=".TappingTest"></activity>
     </application>
 
 </manifest>
