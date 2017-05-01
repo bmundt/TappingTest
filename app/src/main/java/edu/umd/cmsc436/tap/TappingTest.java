@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import static edu.umd.cmsc436.frontendhelper.TrialMode.getAppendage;
 import static edu.umd.cmsc436.frontendhelper.TrialMode.getPatientId;
+import static edu.umd.cmsc436.frontendhelper.TrialMode.getResultIntent;
 import static edu.umd.cmsc436.frontendhelper.TrialMode.getTrialNum;
 import static edu.umd.cmsc436.frontendhelper.TrialMode.getTrialOutOf;
 import static java.lang.Thread.currentThread;
@@ -213,6 +214,8 @@ public class TappingTest extends Activity implements Sheets.Host {
 //        } finally {
 //            finish();
 //        }
+        Intent resultIntent = getResultIntent(totalTaps);
+        setResult(RESULT_OK, resultIntent);
         finish();
 
     }
