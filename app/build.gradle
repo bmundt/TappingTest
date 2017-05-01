@@ -7,7 +7,7 @@ android {
         cruncherEnabled = false
     }
     defaultConfig {
-        applicationId "edu.umd.cmsc436.tappingtest"
+        applicationId "edu.umd.cmsc436.tap"
         minSdkVersion 23
         targetSdkVersion 25
         versionCode 1
