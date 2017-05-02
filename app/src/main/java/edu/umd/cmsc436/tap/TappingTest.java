@@ -148,25 +148,21 @@ public class TappingTest extends Activity implements Sheets.Host {
 
     protected void restart(View v) {
         AlertDialog restart = new AlertDialog.Builder(TappingTest.this).create();
-        restart.setTitle("Restart Test");
-        restart.setMessage("Would you like to restart the test?");
-        restart.setButton(AlertDialog.BUTTON_NEUTRAL, "YES",
+        restart.setTitle("Cancel Test");
+        restart.setCancelable(false);
+        timer.cancel();
+        timerStarted = false;
+        restart.setMessage("This test has been canceled. Please retry it again");
+        restart.setButton(AlertDialog.BUTTON_NEUTRAL, "Got it",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        timer.cancel();
-                        timerStarted = false;
-                        Intent intent = new Intent(TappingTest.this, TappingPractice.class);
-                        intent.putExtra("appendage", (Sheets.TestType) getIntent().getSerializableExtra("appendage"));
-                        startActivity(intent);
-                        dialog.dismiss();
-                    }
-                });
-        restart.setButton(AlertDialog.BUTTON_NEUTRAL, "NO",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        Intent intent = new Intent(TappingTest.this, TappingPractice.class);
-                        intent.putExtra("appendage", (Sheets.TestType) getIntent().getSerializableExtra("appendage"));
-                        startActivity(intent);
+
+
+                        //Intent intent = new Intent(TappingTest.this, TappingPractice.class);
+                        //intent.putExtra("appendage", (Sheets.TestType) getIntent().getSerializableExtra("appendage"));
+                        //startActivity(intent);
+                        Intent resultIntent = getResultIntent(0.00F);
+                        setResult(RESULT_OK, resultIntent);
                         dialog.dismiss();
                     }
                 });
