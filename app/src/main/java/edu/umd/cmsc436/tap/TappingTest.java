@@ -178,9 +178,11 @@ public class TappingTest extends Activity implements Sheets.Host {
                         //Intent intent = new Intent(TappingTest.this, TappingPractice.class);
                         //intent.putExtra("appendage", (Sheets.TestType) getIntent().getSerializableExtra("appendage"));
                         //startActivity(intent);
-                        Intent resultIntent = getResultIntent(0.00F);
+                        Intent resultIntent = new Intent();
+                        resultIntent.putExtra(KEY_SCORE, 0.00F);
                         setResult(RESULT_OK, resultIntent);
                         dialog.dismiss();
+                        finish();
                     }
                 });
         restart.show();

@@ -16,7 +16,7 @@
         android:layout_alignBottom="@+id/question_mark"
         android:onClick="restart"
         android:id="@+id/restart_btn"
-        android:text="Restart Test"/>
+        android:text="Cancel Test"/>
 
     <TextView
         android:layout_width="wrap_content"
