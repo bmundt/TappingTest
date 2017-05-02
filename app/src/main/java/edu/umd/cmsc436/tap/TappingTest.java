@@ -255,4 +255,10 @@ public class TappingTest extends Activity implements Sheets.Host {
         super.onActivityResult(requestCode, resultCode, data);
         sheet.onActivityResult(requestCode, resultCode, data);
     }
+
+    @Override
+    public void onBackPressed() {
+    }
 }
+
+
