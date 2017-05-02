@@ -7,27 +7,29 @@ import edu.umd.cmsc436.sheets.Sheets;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.CountDownTimer;
-import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import edu.umd.cmsc436.sheets.Sheets;
-
 import static edu.umd.cmsc436.frontendhelper.TrialMode.getAppendage;
 import static edu.umd.cmsc436.frontendhelper.TrialMode.getPatientId;
+import static edu.umd.cmsc436.frontendhelper.TrialMode.getResultIntent;
 import static edu.umd.cmsc436.frontendhelper.TrialMode.getTrialNum;
 import static edu.umd.cmsc436.frontendhelper.TrialMode.getTrialOutOf;
+import static java.lang.Thread.currentThread;
+import static java.lang.Thread.sleep;
 
 
-public class TappingTest extends Activity {
+public class TappingTest extends Activity implements Sheets.Host {
 
     private String patientId;
     private Sheets.TestType appendage;
     private int trialNum;
     private int trialOutOf;
+    private final int TIME_LIMIT = 10; // number of seconds
 
     private Intent intent;
     private TextView timeLeft;
@@ -36,13 +38,19 @@ public class TappingTest extends Activity {
     private int taps;
     private boolean timerStarted;
     private long secondsRemaining;
+    private float[] numTaps;
     ImageButton questionMark;
+    private Sheets sheet;
+
+    private final String MAIN_SHEET_ID = "1YvI3CjS4ZlZQDYi5PaiA7WGGcoCsZfLoSFM0IdvdbDU";
+    private final String PRIVATE_SHEET_ID = "1MU87u75_qx35qb6TdtizRBeOH1fkO76ufzR47bfZaRQ";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tapping_practice);
 
+        numTaps = new float[TIME_LIMIT];
         intent = getIntent();
         appendage= getAppendage(intent);
         trialNum = getTrialNum(intent);
@@ -60,45 +68,52 @@ public class TappingTest extends Activity {
 
         timeLeft = (TextView) findViewById(R.id.timeLeft);
         questionMark = (ImageButton) findViewById(R.id.question_mark);
+
+        sheet = new Sheets(this, this, getString(R.string.app_name),
+                MAIN_SHEET_ID, PRIVATE_SHEET_ID);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         if (secondsRemaining != 0) {
-            timer = new CountDownTimer(secondsRemaining  * 1000, 1000) {
-                @Override
-                public void onTick(long millisUntilFinished) {
-                    secondsRemaining = millisUntilFinished / 1000;
-                    timeLeft.setText("Seconds remaining: " + secondsRemaining);
-                }
-
-                @Override
-                public void onFinish() {
-                    totalTaps = taps;
-                    // set the values for the different trials
-                    timeLeft.setText("Total Taps: " + totalTaps);
-                    intent.putExtra("score", new Float(totalTaps));
-                    finish();
-                }
-            };
+            createCountdownTimer(secondsRemaining);
+//            timer = new CountDownTimer(secondsRemaining  * 1000, 1000) {
+//                @Override
+//                public void onTick(long millisUntilFinished) {
+//                    secondsRemaining = millisUntilFinished / 1000;
+//                    numTaps[TIME_LIMIT - (int) secondsRemaining] = taps;
+//                    timeLeft.setText("Seconds remaining: " + secondsRemaining);
+//                }
+//
+//                @Override
+//                public void onFinish() {
+//                    totalTaps = taps;
+//                    // set the values for the different trials
+//                    timeLeft.setText("Total Taps: " + totalTaps);
+//                    intent.putExtra("score", new Float(totalTaps));
+//                    finish();
+//                }
+//            };
         } else {
-            timer = new CountDownTimer(10000, 1000) {
-                @Override
-                public void onTick(long millisUntilFinished) {
-                    secondsRemaining = millisUntilFinished / 1000;
-                    timeLeft.setText("Seconds remaining: " + secondsRemaining);
-                }
-
-                @Override
-                public void onFinish() {
-                    totalTaps = taps;
-                    // set the values for the different trials
-                    timeLeft.setText("Total Taps: " + totalTaps);
-                    intent.putExtra("score", new Float(totalTaps));
-                    finish();
-                }
-            };
+            createCountdownTimer(TIME_LIMIT);
+//            timer = new CountDownTimer(TIME_LIMIT * 1000, 1000) {
+//                @Override
+//                public void onTick(long millisUntilFinished) {
+//                    secondsRemaining = millisUntilFinished / 1000;
+//                    numTaps[TIME_LIMIT - (int) secondsRemaining] = taps;
+//                    timeLeft.setText("Seconds remaining: " + secondsRemaining);
+//                }
+//
+//                @Override
+//                public void onFinish() {
+//                    totalTaps = taps;
+//                    // set the values for the different trials
+//                    timeLeft.setText("Total Taps: " + totalTaps);
+//                    intent.putExtra("score", new Float(totalTaps));
+//                    finish();
+//                }
+//            };
         }
 
         timerStarted = false;
@@ -157,7 +172,6 @@ public class TappingTest extends Activity {
                 });
         restart.show();
     }
-
 
     private void createCountdownTimer(final long timeRemaining) {
         timer = new CountDownTimer(timeRemaining  * 1000, 1000) {
@@ -245,7 +259,6 @@ public class TappingTest extends Activity {
     @Override
     public void onBackPressed() {
     }
-
 }
 
 
