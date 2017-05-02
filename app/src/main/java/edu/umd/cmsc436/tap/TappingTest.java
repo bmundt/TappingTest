@@ -12,6 +12,7 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import org.w3c.dom.Text;
@@ -47,6 +48,7 @@ public class TappingTest extends Activity implements Sheets.Host {
     private final String MAIN_SHEET_ID = "1YvI3CjS4ZlZQDYi5PaiA7WGGcoCsZfLoSFM0IdvdbDU";
     private final String PRIVATE_SHEET_ID = "1MU87u75_qx35qb6TdtizRBeOH1fkO76ufzR47bfZaRQ";
 
+    private ProgressBar progressBar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,6 +85,11 @@ public class TappingTest extends Activity implements Sheets.Host {
 
         sheet = new Sheets(this, this, getString(R.string.app_name),
                 MAIN_SHEET_ID, PRIVATE_SHEET_ID);
+
+        progressBar = (ProgressBar) findViewById(R.id.progressBar);
+        progressBar.setProgress(0);
+        progressBar.setVisibility(View.VISIBLE);
+        progressBar.setMax(10000);
     }
 
     @Override
@@ -189,6 +196,7 @@ public class TappingTest extends Activity implements Sheets.Host {
                 numTaps[TIME_LIMIT - ((int) secondsRemaining) - 1] = taps;
                 Log.d("TAPS", "wrote " + taps + " taps at position" + (TIME_LIMIT - ((int) secondsRemaining) - 1));
                 timeLeft.setText("Seconds remaining: " + secondsRemaining);
+                updateProgressBar((int) millisUntilFinished);
             }
 
             @Override
@@ -268,6 +276,12 @@ public class TappingTest extends Activity implements Sheets.Host {
 
     @Override
     public void onBackPressed() {
+    }
+
+    private void updateProgressBar(int millisUntilFinished){
+
+        progressBar.setProgress(11000-millisUntilFinished);
+
     }
 }
 
