@@ -15,8 +15,6 @@ import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
 import static edu.umd.cmsc436.frontendhelper.TrialMode.KEY_SCORE;
 import static edu.umd.cmsc436.frontendhelper.TrialMode.getAppendage;
 import static edu.umd.cmsc436.frontendhelper.TrialMode.getPatientId;
