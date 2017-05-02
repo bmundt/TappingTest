@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import static edu.umd.cmsc436.frontendhelper.TrialMode.KEY_SCORE;
 import static edu.umd.cmsc436.frontendhelper.TrialMode.getAppendage;
 import static edu.umd.cmsc436.frontendhelper.TrialMode.getPatientId;
 import static edu.umd.cmsc436.frontendhelper.TrialMode.getResultIntent;
@@ -186,7 +187,7 @@ public class TappingTest extends Activity implements Sheets.Host {
                 timeLeft.setText("Total Taps: " + totalTaps);
                 numTaps[TIME_LIMIT - 1] = totalTaps;
                 Log.d("TAPS", "wrote " + taps + " taps at position" + (TIME_LIMIT - 1));
-                intent.putExtra("score", new Float(totalTaps));
+//                intent.putExtra("score", new Float(totalTaps));
                 testFinished();
             }
         };
@@ -210,7 +211,9 @@ public class TappingTest extends Activity implements Sheets.Host {
 //        } finally {
 //            finish();
 //        }
-        Intent resultIntent = getResultIntent(totalTaps);
+        Intent resultIntent = new Intent();
+        resultIntent.putExtra(KEY_SCORE, (float) totalTaps);
+//        Intent resultIntent = getResultIntent((float) totalTaps);
         setResult(RESULT_OK, resultIntent);
         finish();
 
