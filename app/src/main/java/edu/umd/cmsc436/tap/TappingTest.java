@@ -157,4 +157,95 @@ public class TappingTest extends Activity {
                 });
         restart.show();
     }
+
+
+    private void createCountdownTimer(final long timeRemaining) {
+        timer = new CountDownTimer(timeRemaining  * 1000, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                secondsRemaining = millisUntilFinished / 1000;
+                numTaps[TIME_LIMIT - ((int) secondsRemaining) - 1] = taps;
+                Log.d("TAPS", "wrote " + taps + " taps at position" + (TIME_LIMIT - ((int) secondsRemaining) - 1));
+                timeLeft.setText("Seconds remaining: " + secondsRemaining);
+            }
+
+            @Override
+            public void onFinish() {
+                totalTaps = taps;
+                // set the values for the different trials
+                timeLeft.setText("Total Taps: " + totalTaps);
+                numTaps[TIME_LIMIT - 1] = totalTaps;
+                Log.d("TAPS", "wrote " + taps + " taps at position" + (TIME_LIMIT - 1));
+                intent.putExtra("score", new Float(totalTaps));
+                testFinished();
+            }
+        };
+    }
+
+    private void testFinished() {
+        Log.d("SHEETS", patientId);
+        sheet.writeTrials(appendage, patientId, numTaps);
+        Log.d("SHEETS", "NumTaps last 2: " + numTaps[8] + "," + numTaps[9]);
+        Log.d("SHEETS", "finished writing trial");
+//        try {
+//            sleep(10000);
+//        } catch(Exception e) {
+//            Log.d("TAP", "couldn't sleep at end");
+//        }
+//        try {
+//            currentThread().join();
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//            Log.d("SHEETS", "failed waiting for background thread");
+//        } finally {
+//            finish();
+//        }
+        Intent resultIntent = getResultIntent(totalTaps);
+        setResult(RESULT_OK, resultIntent);
+        finish();
+
+    }
+
+    @Override
+    public int getRequestCode(Sheets.Action action) {
+        switch (action) {
+            case REQUEST_PERMISSIONS:
+                return 1000;
+            case REQUEST_ACCOUNT_NAME:
+                return 1001;
+            case REQUEST_PLAY_SERVICES:
+                return 1002;
+            case REQUEST_AUTHORIZATION:
+                return 1003;
+        }
+        return 0;
+    }
+
+    @Override
+    public void notifyFinished(Exception e) {
+        if (e != null) {
+            Log.d("SHEETS", e.toString());
+        } else {
+            Log.d("SHEETS", "notifyFinished exception was null");
+        }
+    }
+
+
+    @Override
+    public void onRequestPermissionsResult (int requestCode, @NonNull String permissions[], @NonNull int[] grantResults) {
+        sheet.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        sheet.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
+    public void onBackPressed() {
+    }
+
 }
+
+

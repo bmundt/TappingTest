@@ -26,4 +26,7 @@ public class Practice extends Activity {
         intent.putExtra("Appendage", Sheets.TestType.LF_TAP);
         startActivity(intent);
     }
+    @Override
+    public void onBackPressed() {
+    }
 }

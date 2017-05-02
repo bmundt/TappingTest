@@ -140,4 +140,8 @@ public class TappingPractice extends AppCompatActivity {
                 });
         restart.show();
     }
+
+    @Override
+    public void onBackPressed() {
+    }
 }

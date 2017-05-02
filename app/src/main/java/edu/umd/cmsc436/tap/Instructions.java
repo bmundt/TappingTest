@@ -17,4 +17,8 @@ public class Instructions extends AppCompatActivity {
     protected void next(View v) {
         finish();
     }
+
+    @Override
+    public void onBackPressed() {
+    }
 }
