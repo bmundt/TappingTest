@@ -61,6 +61,7 @@
         android:text="Tap"
         android:onClick="tapButton"
         android:layout_alignParentBottom="true"
+        android:background="@drawable/tap_button_bg"
         android:layout_below="@+id/progressBar"
         android:textSize="40dp"
         />

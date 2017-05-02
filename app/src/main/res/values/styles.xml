@@ -8,4 +8,9 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="AppTheme.ColorBlind" parent="AppTheme">
+        <item name="colorPrimary">@color/colorPrimary436</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark436</item>
+        <item name="colorAccent">@color/colorAccent436</item>
+    </style>
 </resources>
