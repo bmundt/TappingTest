@@ -17,7 +17,11 @@ import android.widget.TextView;
 
 import com.google.api.services.sheets.v4.model.Sheet;
 
+import static edu.umd.cmsc436.frontendhelper.TrialMode.KEY_APPENDAGE;
+import static edu.umd.cmsc436.frontendhelper.TrialMode.KEY_PATIENT_ID;
 import static edu.umd.cmsc436.frontendhelper.TrialMode.KEY_SCORE;
+import static edu.umd.cmsc436.frontendhelper.TrialMode.KEY_TRIAL_NUM;
+import static edu.umd.cmsc436.frontendhelper.TrialMode.KEY_TRIAL_OUT_OF;
 import static edu.umd.cmsc436.frontendhelper.TrialMode.getAppendage;
 import static edu.umd.cmsc436.frontendhelper.TrialMode.getPatientId;
 import static edu.umd.cmsc436.frontendhelper.TrialMode.getResultIntent;
@@ -81,7 +85,8 @@ public class TappingTest extends Activity implements Sheets.Host {
             } else {
                 handText.setText("Right Foot\nTrial " + trialNum + " of " + trialOutOf);
             }
-
+        } else {
+            Log.d("TAP", "appendage not recognized");
         }
 
         timeLeft = (TextView) findViewById(R.id.timeLeft);
@@ -175,20 +180,27 @@ public class TappingTest extends Activity implements Sheets.Host {
         restart.setCancelable(false);
         timer.cancel();
         timerStarted = false;
+        timeLeft.setText("Begin Tapping When Ready");
+        taps = 0;
+        progressBar.setProgress(0);
+        // write an incompletet trial to the sheets
+        sheet.writeTrials(appendage, patientId, numTaps);
         restart.setMessage("This test has been canceled. Please retry it again");
         restart.setButton(AlertDialog.BUTTON_NEUTRAL, "Got it",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-
-
-                        //Intent intent = new Intent(TappingTest.this, TappingPractice.class);
-                        //intent.putExtra("appendage", (Sheets.TestType) getIntent().getSerializableExtra("appendage"));
-                        //startActivity(intent);
-                        Intent resultIntent = new Intent();
-                        resultIntent.putExtra(KEY_SCORE, 0.00F);
-                        setResult(RESULT_OK, resultIntent);
-                        dialog.dismiss();
-                        finish();
+                        // somehow doing nothing is the right thing
+//                        Intent intent = new Intent(TappingTest.this, TappingTest.class);
+//                        intent.putExtra(KEY_APPENDAGE, appendage);
+//                        intent.putExtra(KEY_TRIAL_NUM, trialNum);
+//                        intent.putExtra(KEY_TRIAL_OUT_OF, trialOutOf);
+//                        intent.putExtra(KEY_PATIENT_ID, patientId);
+//                        startActivity(intent);
+//                        Intent resultIntent = new Intent();
+//                        resultIntent.putExtra(KEY_SCORE, 0.00F);
+//                        setResult(RESULT_OK, resultIntent);
+//                        dialog.dismiss();
+//                        finish();
                     }
                 });
         restart.show();
