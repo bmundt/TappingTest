@@ -14,13 +14,14 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import org.w3c.dom.Text;
+
 import static edu.umd.cmsc436.frontendhelper.TrialMode.KEY_SCORE;
 import static edu.umd.cmsc436.frontendhelper.TrialMode.getAppendage;
 import static edu.umd.cmsc436.frontendhelper.TrialMode.getPatientId;
 import static edu.umd.cmsc436.frontendhelper.TrialMode.getResultIntent;
 import static edu.umd.cmsc436.frontendhelper.TrialMode.getTrialNum;
 import static edu.umd.cmsc436.frontendhelper.TrialMode.getTrialOutOf;
-import static java.lang.Thread.currentThread;
 import static java.lang.Thread.sleep;
 
 
@@ -59,12 +60,22 @@ public class TappingTest extends Activity implements Sheets.Host {
         patientId = getPatientId(intent);
 
 
+
+
+
         if (appendage == Sheets.TestType.LH_TAP)  {
             setContentView(R.layout.left_hand_test);
+            TextView handText = (TextView) findViewById(R.id.handtext);
+            handText.setText("Left Hand | Trial " + trialNum + " of " + trialOutOf);
         } else if (appendage == Sheets.TestType.RH_TAP) {
             setContentView(R.layout.right_hand_test);
+            TextView handText = (TextView) findViewById(R.id.handtext);
+            handText.setText("Right Hand | Trial " + trialNum + " of " + trialOutOf);
         } else if (appendage == Sheets.TestType.LF_TAP || appendage == Sheets.TestType.RF_TAP) {
             setContentView(R.layout.foot_test);
+            TextView handText = (TextView) findViewById(R.id.handtext);
+            handText.setText("Foot | Trial " + trialNum + " of " + trialOutOf);
+
         }
 
         timeLeft = (TextView) findViewById(R.id.timeLeft);
