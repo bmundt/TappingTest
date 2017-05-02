@@ -15,6 +15,8 @@ import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.google.api.services.sheets.v4.model.Sheet;
+
 import static edu.umd.cmsc436.frontendhelper.TrialMode.KEY_SCORE;
 import static edu.umd.cmsc436.frontendhelper.TrialMode.getAppendage;
 import static edu.umd.cmsc436.frontendhelper.TrialMode.getPatientId;
@@ -74,7 +76,11 @@ public class TappingTest extends Activity implements Sheets.Host {
         } else if (appendage == Sheets.TestType.LF_TAP || appendage == Sheets.TestType.RF_TAP) {
             setContentView(R.layout.foot_test);
             TextView handText = (TextView) findViewById(R.id.handtext);
-            handText.setText("Foot\nTrial " + trialNum + " of " + trialOutOf);
+            if (appendage == Sheets.TestType.LF_TAP) {
+                handText.setText("Left Foot\nTrial " + trialNum + " of " + trialOutOf);
+            } else {
+                handText.setText("Right Foot\nTrial " + trialNum + " of " + trialOutOf);
+            }
 
         }
 
