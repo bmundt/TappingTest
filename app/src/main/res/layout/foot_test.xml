@@ -58,7 +58,7 @@
         android:layout_width="match_parent"
         android:text="Tap"
         android:layout_centerInParent="true"
-        android:layout_below="@id/timeLeft"
+        android:layout_below="@id/progressBar"
         android:onClick="tapButton"
         android:background="@drawable/tap_button_bg"
         android:textSize="40dp"
