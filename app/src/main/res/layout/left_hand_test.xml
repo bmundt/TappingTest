@@ -45,6 +45,15 @@
         android:layout_below="@+id/restart_btn"
         android:text="Begin Tapping When Ready"/>
 
+    <ProgressBar
+        style="@android:style/Widget.Holo.ProgressBar.Horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/progressBar"
+        android:layout_below="@+id/timeLeft"
+        android:layout_alignParentStart="true"
+        />
+
     <Button
         android:id="@+id/tap"
         android:layout_height="match_parent"
@@ -52,8 +61,6 @@
         android:text="Tap"
         android:onClick="tapButton"
         android:layout_alignParentBottom="true"
-        android:layout_below="@+id/timeLeft"
-        android:layout_alignParentEnd="true"
-        android:background="@drawable/tap_button_bg" />
+        android:layout_below="@+id/progressBar" />
 
 </RelativeLayout>

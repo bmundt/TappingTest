@@ -3,12 +3,14 @@ package edu.umd.cmsc436.tap;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.ProgressBar;
 
 import edu.umd.cmsc436.sheets.Sheets;
 
@@ -24,7 +26,7 @@ public class TappingPractice extends AppCompatActivity {
     private boolean timerStarted;
     private long secondsRemaining;
     ImageButton questionMark;
-
+    private ProgressBar progressBar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,6 +45,11 @@ public class TappingPractice extends AppCompatActivity {
 
         timeLeft = (TextView) findViewById(R.id.timeLeft);
         questionMark = (ImageButton) findViewById(R.id.question_mark);
+
+        progressBar = (ProgressBar) findViewById(R.id.progressBar);
+        progressBar.setProgress(0);
+        progressBar.setVisibility(View.VISIBLE);
+        progressBar.setMax(10000);
     }
 
     @Override
@@ -54,6 +61,7 @@ public class TappingPractice extends AppCompatActivity {
                 public void onTick(long millisUntilFinished) {
                     secondsRemaining = millisUntilFinished / 1000;
                     timeLeft.setText("Seconds remaining: " + secondsRemaining);
+                    updateProgressBar((int) millisUntilFinished);
                 }
 
                 @Override
@@ -62,6 +70,9 @@ public class TappingPractice extends AppCompatActivity {
                     // set the values for the different trials
                     timeLeft.setText("Total Taps: " + totalTaps);
                     intent.putExtra("score", new Float(totalTaps));
+                    Intent intent = new Intent(TappingPractice.this, PracticeResultPage.class);
+                    intent.putExtra("Taps", totalTaps);
+                    startActivity(intent);
                     finish();
                 }
             };
@@ -71,6 +82,7 @@ public class TappingPractice extends AppCompatActivity {
                 public void onTick(long millisUntilFinished) {
                     secondsRemaining = millisUntilFinished / 1000;
                     timeLeft.setText("Seconds remaining: " + secondsRemaining);
+                    updateProgressBar((int) millisUntilFinished);
                 }
 
                 @Override
@@ -79,6 +91,9 @@ public class TappingPractice extends AppCompatActivity {
                     // set the values for the different trials
                     timeLeft.setText("Total Taps: " + totalTaps);
                     intent.putExtra("score", new Float(totalTaps));
+                    Intent intent = new Intent(TappingPractice.this, PracticeResultPage.class);
+                    intent.putExtra("Taps", totalTaps);
+                    startActivity(intent);
                     finish();
                 }
             };
@@ -140,6 +155,13 @@ public class TappingPractice extends AppCompatActivity {
                 });
         restart.show();
     }
+
+    private void updateProgressBar(int millisUntilFinished){
+
+        progressBar.setProgress(11000-millisUntilFinished);
+
+    }
+
 
     @Override
     public void onBackPressed() {

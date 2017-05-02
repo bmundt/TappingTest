@@ -32,8 +32,7 @@
                 <!-- category android:name="android.intent.category.DEFAULT" / -->
             </intent-filter>
         </activity>
-        <activity android:name=".TappingPractice">
-        </activity>
+        <activity android:name=".TappingPractice"></activity>
         <activity android:name=".TappingTest">
             <intent-filter>
                 <action android:name="edu.umd.cmsc436.tap.action.TRIAL" />
@@ -41,6 +40,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+        <activity android:name=".PracticeResultPage"></activity>
     </application>
 
 </manifest>
