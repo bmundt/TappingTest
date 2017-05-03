@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
-    tools:context="edu.umd.cmsc436.tap.TappingPractice">
+    tools:context="edu.umd.cmsc436.tap.TappingTest">
 
     <Button
         android:layout_weight="0.2"
@@ -59,7 +58,6 @@
         android:layout_height="match_parent"
         android:layout_width="150dp"
         android:text="Tap"
-        android:onClick="tapButton"
         android:layout_alignParentBottom="true"
         android:background="@drawable/tap_button_bg"
         android:layout_below="@+id/progressBar"

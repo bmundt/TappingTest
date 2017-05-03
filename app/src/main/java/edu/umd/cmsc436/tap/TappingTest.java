@@ -2,6 +2,7 @@ package edu.umd.cmsc436.tap;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.media.Image;
 import android.os.Bundle;
 import edu.umd.cmsc436.sheets.Sheets;
 
@@ -11,6 +12,7 @@ import android.os.CountDownTimer;
 import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -46,8 +48,12 @@ public class TappingTest extends Activity implements Sheets.Host {
     private boolean timerStarted;
     private long secondsRemaining;
     private float[] numTaps;
-    ImageButton questionMark;
+    private Button tap;
+    private ImageButton questionMark;
     private Sheets sheet;
+
+    private boolean practiceMode;
+    private final String KEY_PRACTICE_MODE = "PRACTICE_MODE";
 
     private final String MAIN_SHEET_ID = "1YvI3CjS4ZlZQDYi5PaiA7WGGcoCsZfLoSFM0IdvdbDU";
     private final String PRIVATE_SHEET_ID = "1MU87u75_qx35qb6TdtizRBeOH1fkO76ufzR47bfZaRQ";
@@ -60,14 +66,18 @@ public class TappingTest extends Activity implements Sheets.Host {
 
         numTaps = new float[TIME_LIMIT];
         intent = getIntent();
-        appendage= getAppendage(intent);
-        trialNum = getTrialNum(intent);
-        trialOutOf = getTrialOutOf(intent);
-        patientId = getPatientId(intent);
+//        appendage= getAppendage(intent);
 
+        practiceMode = intent.getBooleanExtra(KEY_PRACTICE_MODE, false);
 
-
-
+        if (!practiceMode) {
+            appendage = getAppendage(intent);
+            trialNum = getTrialNum(intent);
+            trialOutOf = getTrialOutOf(intent);
+            patientId = getPatientId(intent);
+        } else {
+            appendage = (Sheets.TestType) intent.getSerializableExtra(KEY_APPENDAGE);
+        }
 
         if (appendage == Sheets.TestType.LH_TAP)  {
             setContentView(R.layout.left_hand_test);
@@ -86,11 +96,32 @@ public class TappingTest extends Activity implements Sheets.Host {
                 handText.setText("Right Foot\nTrial " + trialNum + " of " + trialOutOf);
             }
         } else {
+            if (appendage == null)
+                Log.d("TAP", "why is this null!!!");
             Log.d("TAP", "appendage not recognized");
         }
 
-        timeLeft = (TextView) findViewById(R.id.timeLeft);
+
+        Log.d("TAP", "about to set onClickListener");
+        tap = (Button) findViewById(R.id.tap);
+        tap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tapButton(v);
+            }
+        });
+        Log.d("TAP", "onClickListener set");
+
         questionMark = (ImageButton) findViewById(R.id.question_mark);
+        questionMark.setOnClickListener( new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                questionMark(v);
+            }
+        });
+
+        timeLeft = (TextView) findViewById(R.id.timeLeft);
 
         sheet = new Sheets(this, this, getString(R.string.app_name),
                 MAIN_SHEET_ID, PRIVATE_SHEET_ID);
@@ -106,49 +137,15 @@ public class TappingTest extends Activity implements Sheets.Host {
         super.onResume();
         if (secondsRemaining != 0) {
             createCountdownTimer(secondsRemaining);
-//            timer = new CountDownTimer(secondsRemaining  * 1000, 1000) {
-//                @Override
-//                public void onTick(long millisUntilFinished) {
-//                    secondsRemaining = millisUntilFinished / 1000;
-//                    numTaps[TIME_LIMIT - (int) secondsRemaining] = taps;
-//                    timeLeft.setText("Seconds remaining: " + secondsRemaining);
-//                }
-//
-//                @Override
-//                public void onFinish() {
-//                    totalTaps = taps;
-//                    // set the values for the different trials
-//                    timeLeft.setText("Total Taps: " + totalTaps);
-//                    intent.putExtra("score", new Float(totalTaps));
-//                    finish();
-//                }
-//            };
         } else {
             createCountdownTimer(TIME_LIMIT);
-//            timer = new CountDownTimer(TIME_LIMIT * 1000, 1000) {
-//                @Override
-//                public void onTick(long millisUntilFinished) {
-//                    secondsRemaining = millisUntilFinished / 1000;
-//                    numTaps[TIME_LIMIT - (int) secondsRemaining] = taps;
-//                    timeLeft.setText("Seconds remaining: " + secondsRemaining);
-//                }
-//
-//                @Override
-//                public void onFinish() {
-//                    totalTaps = taps;
-//                    // set the values for the different trials
-//                    timeLeft.setText("Total Taps: " + totalTaps);
-//                    intent.putExtra("score", new Float(totalTaps));
-//                    finish();
-//                }
-//            };
         }
 
         timerStarted = false;
         taps = 0;
     }
 
-    protected void tapButton(View v) {
+    public void tapButton(View v) {
         if (!timerStarted) { // only start timer if not already started
             questionMark.setVisibility(View.INVISIBLE);
             timer.start();
@@ -159,12 +156,13 @@ public class TappingTest extends Activity implements Sheets.Host {
         }
     }
 
-    protected void questionMark(View v) {
+    public void questionMark(View v) {
         AlertDialog instructions = new AlertDialog.Builder(TappingTest.this).create();
         instructions.setTitle("Instructions");
-        instructions.setMessage("Place the phone on a level surface\n" +
-                "Begin Tapping the button in the middle of the screen when ready\n" +
-                "A Timer will start on the first tap, and you will have 10 seconds to tap as many times as possible");
+        instructions.setMessage("Place the phone on a level surface.\n" +
+                "Begin Tapping the large button on the screen.\n" +
+                "A Timer will start on the first tap, and you will have 10 seconds to tap as many times as possible.\n" +
+                "Please use your pointer finger to tap.");
         instructions.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
@@ -174,7 +172,7 @@ public class TappingTest extends Activity implements Sheets.Host {
         instructions.show();
     }
 
-    protected void restart(View v) {
+    public void restart(View v) {
         AlertDialog restart = new AlertDialog.Builder(TappingTest.this).create();
         restart.setTitle("Cancel Test");
         restart.setCancelable(false);
@@ -231,29 +229,21 @@ public class TappingTest extends Activity implements Sheets.Host {
     }
 
     private void testFinished() {
-        Log.d("SHEETS", patientId);
-        sheet.writeTrials(appendage, patientId, numTaps);
-        Log.d("SHEETS", "NumTaps last 2: " + numTaps[8] + "," + numTaps[9]);
-        Log.d("SHEETS", "finished writing trial");
-//        try {
-//            sleep(10000);
-//        } catch(Exception e) {
-//            Log.d("TAP", "couldn't sleep at end");
-//        }
-//        try {
-//            currentThread().join();
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//            Log.d("SHEETS", "failed waiting for background thread");
-//        } finally {
-//            finish();
-//        }
-        Intent resultIntent = new Intent();
-        resultIntent.putExtra(KEY_SCORE, (float) totalTaps);
-//        Intent resultIntent = getResultIntent((float) totalTaps);
-        setResult(RESULT_OK, resultIntent);
-        finish();
-
+        if (!practiceMode) {
+            Log.d("SHEETS", patientId);
+            sheet.writeTrials(appendage, patientId, numTaps);
+            Log.d("SHEETS", "NumTaps last 2: " + numTaps[8] + "," + numTaps[9]);
+            Log.d("SHEETS", "finished writing trial");
+            Intent resultIntent = new Intent();
+            resultIntent.putExtra(KEY_SCORE, (float) totalTaps);
+            setResult(RESULT_OK, resultIntent);
+            finish();
+        } else {
+            Intent intent = new Intent(TappingTest.this, PracticeResultPage.class);
+            intent.putExtra("TAPS", totalTaps);
+            startActivity(intent);
+            finish();
+        }
     }
 
     @Override
@@ -294,6 +284,10 @@ public class TappingTest extends Activity implements Sheets.Host {
 
     @Override
     public void onBackPressed() {
+        // do the cancel stuff Activity.RESULT_CANCELLED
+        Intent resultIntent = new Intent();
+        setResult(RESULT_CANCELED, resultIntent);
+        finish();
     }
 
     private void updateProgressBar(int millisUntilFinished){
