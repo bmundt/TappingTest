@@ -81,13 +81,11 @@ public class TappingTest extends Activity implements Sheets.Host {
 
         if (appendage == Sheets.TestType.LH_TAP)  {
             setContentView(R.layout.left_hand_test);
-            TextView handText = (TextView) findViewById(R.id.handtext);
-            Button tap = (Button) findViewById(R.id.tap);
-
+            TextView handText = (TextView) findViewById(R.id.displayText);
             handText.setText("Left Hand\nTrial " + trialNum + " of " + trialOutOf);
         } else if (appendage == Sheets.TestType.RH_TAP) {
             setContentView(R.layout.right_hand_test);
-            TextView handText = (TextView) findViewById(R.id.handtext);
+            TextView handText = (TextView) findViewById(R.id.displayText);
             handText.setText("Right Hand\nTrial " + trialNum + " of " + trialOutOf);
         } else if (appendage == Sheets.TestType.LF_TAP || appendage == Sheets.TestType.RF_TAP) {
             setContentView(R.layout.foot_test);
@@ -149,7 +147,9 @@ public class TappingTest extends Activity implements Sheets.Host {
 
     public void tapButton(View v) {
         if (!timerStarted) { // only start timer if not already started
-            questionMark.setVisibility(View.INVISIBLE);
+            questionMark.setAlpha(.5f);
+            questionMark.setClickable(false);
+            //questionMark.setVisibility(View.INVISIBLE);
             timer.start();
             taps++;
             timerStarted = true;

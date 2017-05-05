@@ -18,10 +18,9 @@
         android:text="Cancel Test"/>
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="80dp"
         android:layout_height="wrap_content"
         android:id="@+id/handtext"
-        android:text="HandLeft "
         android:layout_alignParentTop="true"
         android:layout_alignEnd="@+id/timeLeft"
         android:layout_marginEnd="50dp" />
@@ -53,27 +52,28 @@
         android:layout_alignParentStart="true"
         />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:id="@+id/displayText"
-        android:text="HandLeft"
-        android:layout_below="@+id/progressBar"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentBottom="true"
-        android:layout_toStartOf="@+id/tap" />
-
     <Button
         android:id="@+id/tap"
-        android:layout_height="match_parent"
-        android:layout_width="150dp"
+        android:layout_weight="1"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
         android:text="Tap"
+        android:textSize="40dp"
         android:background="@drawable/tap_button_bg"
+        android:layout_alignParentBottom="true"
         android:layout_below="@+id/progressBar"
         android:layout_alignParentEnd="true"
+        android:layout_toStartOf="@+id/displayText" />
+
+    <TextView
+        android:id="@+id/displayText"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
         android:textSize="40dp"
+        android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
-        android:layout_alignStart="@+id/handtext" />
+        android:layout_below="@+id/progressBar" />
 
 
 
