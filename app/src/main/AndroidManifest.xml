@@ -9,14 +9,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.ColorBlind">
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Instructions">
+        <activity android:name=".Instructions"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="edu.umd.cmsc436.tap.action.HELP" />
 
@@ -24,7 +28,9 @@
                 <!-- category android:name="android.intent.category.DEFAULT"/ -->
             </intent-filter>
         </activity>
-        <activity android:name=".Practice">
+        <activity android:name=".Practice"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="edu.umd.cmsc436.tap.action.PRACTICE" />
 
@@ -32,15 +38,21 @@
                 <!-- category android:name="android.intent.category.DEFAULT" / -->
             </intent-filter>
         </activity>
-        <activity android:name=".TappingPractice"></activity>
-        <activity android:name=".TappingTest">
+        <activity android:name=".TappingPractice"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"></activity>
+        <activity android:name=".TappingTest"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="edu.umd.cmsc436.tap.action.TRIAL" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".PracticeResultPage"></activity>
+        <activity android:name=".PracticeResultPage"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>
