@@ -59,6 +59,8 @@ public class TappingTest extends Activity implements Sheets.Host {
     private final String PRIVATE_SHEET_ID = "1MU87u75_qx35qb6TdtizRBeOH1fkO76ufzR47bfZaRQ";
 
     private ProgressBar progressBar;
+    private boolean finished;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -94,6 +96,9 @@ public class TappingTest extends Activity implements Sheets.Host {
                 handText.setText("TAP\n\nLeft Foot\nTrial " + trialNum + " of " + trialOutOf);
             } else {
                 handText.setText("TAP\n\nRight Foot\nTrial " + trialNum + " of " + trialOutOf);
+
+                if(trialNum == trialOutOf)
+                    finished = true;
             }
         } else {
             if (appendage == null)
@@ -239,13 +244,19 @@ public class TappingTest extends Activity implements Sheets.Host {
             Intent resultIntent = new Intent();
             resultIntent.putExtra(KEY_SCORE, (float) totalTaps);
             setResult(RESULT_OK, resultIntent);
-            finish();
-        } else {
-            Intent intent = new Intent(TappingTest.this, PracticeResultPage.class);
-            intent.putExtra("TAPS", totalTaps);
-            startActivity(intent);
-            finish();
         }
+
+        Intent intent = new Intent(TappingTest.this, TrialResult.class);
+
+        if(finished)
+            intent.putExtra("FINISH", true);
+        intent.putExtra("TAPS", totalTaps);
+
+        startActivity(intent);
+
+
+        finish();
+
     }
 
     @Override

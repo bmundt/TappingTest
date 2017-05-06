@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.ColorBlind">
-        <activity android:name=".MainActivity"
+        <activity
+            android:name=".MainActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -18,7 +19,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Instructions"
+        <activity
+            android:name=".Instructions"
             android:configChanges="orientation"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -28,7 +30,8 @@
                 <!-- category android:name="android.intent.category.DEFAULT"/ -->
             </intent-filter>
         </activity>
-        <activity android:name=".Practice"
+        <activity
+            android:name=".Practice"
             android:configChanges="orientation"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -38,10 +41,12 @@
                 <!-- category android:name="android.intent.category.DEFAULT" / -->
             </intent-filter>
         </activity>
-        <activity android:name=".TappingPractice"
+        <activity
+            android:name=".TappingPractice"
             android:configChanges="orientation"
-            android:screenOrientation="portrait"></activity>
-        <activity android:name=".TappingTest"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".TappingTest"
             android:configChanges="orientation"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -50,9 +55,11 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".PracticeResultPage"
+        <activity
+            android:name=".PracticeResultPage"
             android:configChanges="orientation"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
+        <activity android:name=".TrialResult"></activity>
     </application>
 
 </manifest>
