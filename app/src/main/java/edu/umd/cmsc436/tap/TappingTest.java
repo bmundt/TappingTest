@@ -1,7 +1,9 @@
 package edu.umd.cmsc436.tap;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.media.Image;
 import android.os.Bundle;
 import edu.umd.cmsc436.sheets.Sheets;
@@ -51,6 +53,7 @@ public class TappingTest extends Activity implements Sheets.Host {
     private Button tap;
     private ImageButton questionMark;
     private Sheets sheet;
+    private SharedPreferences pref;
 
     private boolean practiceMode;
     private final String KEY_PRACTICE_MODE = "PRACTICE_MODE";
@@ -102,6 +105,8 @@ public class TappingTest extends Activity implements Sheets.Host {
         }
 
 
+        pref = getApplicationContext().getSharedPreferences("TRIALS",
+                Context.MODE_PRIVATE);
         Log.d("TAP", "about to set onClickListener");
         tap = (Button) findViewById(R.id.tap);
         tap.setOnClickListener(new View.OnClickListener() {
@@ -239,6 +244,13 @@ public class TappingTest extends Activity implements Sheets.Host {
             Intent resultIntent = new Intent();
             resultIntent.putExtra(KEY_SCORE, (float) totalTaps);
             setResult(RESULT_OK, resultIntent);
+            SharedPreferences.Editor editor = pref.edit();
+            editor.putInt("TRIAL_" + trialNum, totalTaps);
+            editor.commit();
+            Intent resultsPageIntent = new Intent(TappingTest.this, TrialResultsPage.class);
+            resultsPageIntent.putExtra(KEY_TRIAL_OUT_OF, trialOutOf);
+            resultsPageIntent.putExtra(KEY_APPENDAGE, appendage);
+            startActivity(resultsPageIntent);
             finish();
         } else {
             Intent intent = new Intent(TappingTest.this, PracticeResultPage.class);
