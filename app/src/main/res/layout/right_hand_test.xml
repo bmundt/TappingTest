@@ -54,27 +54,33 @@
         android:layout_alignParentStart="true"
         />
 
-    <TextView
-        android:id="@id/displayText"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:textSize="40dp"
-        android:layout_alignParentBottom="true"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_below="@+id/progressBar"
-        android:layout_alignParentEnd="true"
-        android:layout_toEndOf="@+id/tap" />
-
-    <Button
-        android:id="@+id/tap"
-        android:layout_weight="1"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:text="Tap"
-        android:background="@drawable/tap_button_bg"
-        android:textSize="40dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentBottom="true"
-        android:layout_below="@+id/progressBar" />
+        android:orientation="horizontal"
+        >
+        <Button
+            android:id="@+id/tap"
+            android:layout_weight="1"
+            android:layout_width="400dp"
+            android:layout_height="match_parent"
+            android:text="Tap"
+            android:textSize="40dp"
+            android:background="@drawable/tap_button_bg"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_toStartOf="@+id/displayText" />
+        <TextView
+            android:id="@+id/displayText"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:textSize="40dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentStart="true"
+            android:gravity="center"
+            />
+    </LinearLayout>
 
 </RelativeLayout>

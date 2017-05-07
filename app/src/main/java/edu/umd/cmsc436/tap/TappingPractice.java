@@ -90,8 +90,9 @@ public class TappingPractice extends AppCompatActivity {
                     // set the values for the different trials
                     timeLeft.setText("Total Taps: " + totalTaps);
                     intent.putExtra("score", new Float(totalTaps));
-                    Intent intent = new Intent(TappingPractice.this, PracticeResultPage.class);
-                    intent.putExtra("Taps", totalTaps);
+                    Intent intent = new Intent(TappingPractice.this, TrialResult.class);
+                    intent.putExtra("TAPS", totalTaps);
+                    intent.putExtra("FINISH", true);
                     startActivity(intent);
                     finish();
                 }
