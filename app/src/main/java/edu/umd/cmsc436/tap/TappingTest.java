@@ -91,7 +91,7 @@ public class TappingTest extends Activity implements Sheets.Host {
         if (appendage == Sheets.TestType.LH_TAP)  {
             setContentView(R.layout.left_hand_test);
             TextView handText = (TextView) findViewById(R.id.displayText);
-            handText.setText("Left Hand\nTrial " + trialNum + " of " + trialOutOf);
+            handText.setText("Left Hand\nTrial " + "\n" + trialNum + " of " + trialOutOf);
         } else if (appendage == Sheets.TestType.RH_TAP) {
             setContentView(R.layout.right_hand_test);
             TextView handText = (TextView) findViewById(R.id.displayText);
@@ -103,9 +103,6 @@ public class TappingTest extends Activity implements Sheets.Host {
                 handText.setText("TAP\n\nLeft Foot\nTrial " + "\n" + trialNum + " of " + trialOutOf);
             } else {
                 handText.setText("TAP\n\nRight Foot\nTrial " + "\n" + trialNum + " of " + trialOutOf);
-
-                if(trialNum == trialOutOf)
-                    finished = true;
             }
         } else {
             if (appendage == null)
