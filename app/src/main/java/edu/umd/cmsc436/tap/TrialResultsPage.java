@@ -1,6 +1,7 @@
 package edu.umd.cmsc436.tap;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -16,6 +17,12 @@ import android.widget.GridView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import org.w3c.dom.Text;
+
+import edu.umd.cmsc436.sheets.Sheets;
+
+import static edu.umd.cmsc436.frontendhelper.TrialMode.KEY_APPENDAGE;
+import static edu.umd.cmsc436.frontendhelper.TrialMode.getAppendage;
 import static edu.umd.cmsc436.frontendhelper.TrialMode.getTrialOutOf;
 
 public class TrialResultsPage extends AppCompatActivity {
@@ -32,6 +39,23 @@ public class TrialResultsPage extends AppCompatActivity {
         Log.d("RESULTS", String.valueOf(numTrials));
 
         pref = getApplicationContext().getSharedPreferences("TRIALS", Context.MODE_PRIVATE);
+
+        TextView titleView = (TextView) findViewById(R.id.resultsTitle);
+
+        Intent intent = getIntent();
+        Sheets.TestType appendage = (Sheets.TestType) intent.getSerializableExtra(KEY_APPENDAGE);
+        String title = "";
+        switch(appendage) {
+            case LH_TAP: title = "Left Hand";
+                break;
+            case RH_TAP: title = "Right Hand";
+                break;
+            case LF_TAP: title = "Left Foot";
+                break;
+            case RF_TAP: title = "Right Foot";
+                break;
+        }
+        titleView.setText(title);
 
 //        ScrollView resultsView = (ScrollView) findViewById(R.id.resultsView);
         GridView gridview = (GridView) findViewById(R.id.resultsView);

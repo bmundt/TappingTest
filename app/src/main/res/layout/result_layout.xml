@@ -9,7 +9,7 @@
         android:layout_height="wrap_content"
         android:textAlignment="center"
         android:text="Trial"
-        android:textSize="50dp"
+        android:textSize="40sp"
         android:textStyle="bold"
         android:layout_weight="2"/>
 
@@ -18,6 +18,6 @@
         android:layout_height="wrap_content"
         android:textAlignment="center"
         android:text="60"
-        android:textSize="40dp" />
+        android:textSize="30sp" />
 
 </LinearLayout>

@@ -79,11 +79,23 @@ public class TappingTest extends Activity implements Sheets.Host {
 
         practiceMode = intent.getBooleanExtra(KEY_PRACTICE_MODE, false);
 
+
+        pref = getApplicationContext().getSharedPreferences("TRIALS",
+                Context.MODE_PRIVATE);
+
         if (!practiceMode) {
             appendage = getAppendage(intent);
             trialNum = getTrialNum(intent);
             trialOutOf = getTrialOutOf(intent);
             patientId = getPatientId(intent);
+
+            if (trialNum == 1) {
+                // clear the other trials from the SharedPreferences
+                SharedPreferences.Editor editor = pref.edit();
+                for (int i = 1; i <= trialOutOf; i++)
+                    editor.remove("TRIAL_" + i);
+                editor.commit();
+            }
         } else {
             appendage = (Sheets.TestType) intent.getSerializableExtra(KEY_APPENDAGE);
         }
@@ -110,9 +122,6 @@ public class TappingTest extends Activity implements Sheets.Host {
             Log.d("TAP", "appendage not recognized");
         }
 
-
-        pref = getApplicationContext().getSharedPreferences("TRIALS",
-                Context.MODE_PRIVATE);
         Log.d("TAP", "about to set onClickListener");
         tap = (Button) findViewById(R.id.tap);
         tap.setOnClickListener(new View.OnClickListener() {
@@ -245,19 +254,6 @@ public class TappingTest extends Activity implements Sheets.Host {
         if (!practiceMode) {
             Log.d("SHEETS", patientId);
             sheet.writeTrials(appendage, patientId, numTaps);
-            Log.d("SHEETS", "NumTaps last 2: " + numTaps[8] + "," + numTaps[9]);
-            Log.d("SHEETS", "finished writing trial");
-            Intent resultIntent = new Intent();
-            resultIntent.putExtra(KEY_SCORE, (float) totalTaps);
-            setResult(RESULT_OK, resultIntent);
-            SharedPreferences.Editor editor = pref.edit();
-            editor.putInt("TRIAL_" + trialNum, totalTaps);
-            editor.commit();
-            Intent resultsPageIntent = new Intent(TappingTest.this, TrialResultsPage.class);
-            resultsPageIntent.putExtra(KEY_TRIAL_OUT_OF, trialOutOf);
-            resultsPageIntent.putExtra(KEY_APPENDAGE, appendage);
-            startActivity(resultsPageIntent);
-            finish();
         } else {
             Intent intent = new Intent(TappingTest.this, PracticeResultPage.class);
             intent.putExtra("TAPS", totalTaps);
@@ -291,6 +287,19 @@ public class TappingTest extends Activity implements Sheets.Host {
         } else {
             Log.d("SHEETS", "notifyFinished exception was null");
         }
+
+        Log.d("SHEETS", "NumTaps last 2: " + numTaps[8] + "," + numTaps[9]);
+        Log.d("SHEETS", "finished writing trial");
+        Intent resultIntent = new Intent();
+        resultIntent.putExtra(KEY_SCORE, (float) totalTaps);
+        setResult(RESULT_OK, resultIntent);
+        SharedPreferences.Editor editor = pref.edit();
+        editor.putInt("TRIAL_" + trialNum, totalTaps);
+        editor.commit();
+        Intent resultsPageIntent = new Intent(TappingTest.this, TrialResultsPage.class);
+        resultsPageIntent.putExtra(KEY_TRIAL_OUT_OF, trialOutOf);
+        resultsPageIntent.putExtra(KEY_APPENDAGE, appendage);
+        startActivity(resultsPageIntent);
     }
 
 
