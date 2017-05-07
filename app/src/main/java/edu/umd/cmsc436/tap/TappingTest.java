@@ -61,6 +61,12 @@ public class TappingTest extends Activity implements Sheets.Host {
     private final String MAIN_SHEET_ID = "1YvI3CjS4ZlZQDYi5PaiA7WGGcoCsZfLoSFM0IdvdbDU";
     private final String PRIVATE_SHEET_ID = "1MU87u75_qx35qb6TdtizRBeOH1fkO76ufzR47bfZaRQ";
 
+    public static final int LIB_ACCOUNT_NAME_REQUEST_CODE = 1001;
+    public static final int LIB_AUTHORIZATION_REQUEST_CODE = 1002;
+    public static final int LIB_PERMISSION_REQUEST_CODE = 1003;
+    public static final int LIB_PLAY_SERVICES_REQUEST_CODE = 1004;
+    public static final int LIB_CONNECTION_REQUEST_CODE = 1005;
+
     private ProgressBar progressBar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -263,16 +269,19 @@ public class TappingTest extends Activity implements Sheets.Host {
     @Override
     public int getRequestCode(Sheets.Action action) {
         switch (action) {
-            case REQUEST_PERMISSIONS:
-                return 1000;
             case REQUEST_ACCOUNT_NAME:
-                return 1001;
-            case REQUEST_PLAY_SERVICES:
-                return 1002;
+                return LIB_ACCOUNT_NAME_REQUEST_CODE;
             case REQUEST_AUTHORIZATION:
-                return 1003;
+                return LIB_AUTHORIZATION_REQUEST_CODE;
+            case REQUEST_PERMISSIONS:
+                return LIB_PERMISSION_REQUEST_CODE;
+            case REQUEST_PLAY_SERVICES:
+                return LIB_PLAY_SERVICES_REQUEST_CODE;
+            case REQUEST_CONNECTION_RESOLUTION:
+                return LIB_CONNECTION_REQUEST_CODE;
+            default:
+                return -1;
         }
-        return 0;
     }
 
     @Override
@@ -293,7 +302,7 @@ public class TappingTest extends Activity implements Sheets.Host {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        sheet.onActivityResult(requestCode, resultCode, data);
+        this.sheet.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override
