@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">TappingTest</string>
+    <string name="title_activity_trial_results_page">TrialResultsPage</string>
 </resources>

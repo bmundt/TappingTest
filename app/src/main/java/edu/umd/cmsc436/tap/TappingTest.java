@@ -1,7 +1,9 @@
 package edu.umd.cmsc436.tap;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.media.Image;
 import android.os.Bundle;
 import edu.umd.cmsc436.sheets.Sheets;
@@ -51,6 +53,7 @@ public class TappingTest extends Activity implements Sheets.Host {
     private Button tap;
     private ImageButton questionMark;
     private Sheets sheet;
+    private SharedPreferences pref;
 
     private boolean practiceMode;
     private final String KEY_PRACTICE_MODE = "PRACTICE_MODE";
@@ -58,9 +61,13 @@ public class TappingTest extends Activity implements Sheets.Host {
     private final String MAIN_SHEET_ID = "1YvI3CjS4ZlZQDYi5PaiA7WGGcoCsZfLoSFM0IdvdbDU";
     private final String PRIVATE_SHEET_ID = "1MU87u75_qx35qb6TdtizRBeOH1fkO76ufzR47bfZaRQ";
 
-    private ProgressBar progressBar;
-    private boolean finished;
+    public static final int LIB_ACCOUNT_NAME_REQUEST_CODE = 1001;
+    public static final int LIB_AUTHORIZATION_REQUEST_CODE = 1002;
+    public static final int LIB_PERMISSION_REQUEST_CODE = 1003;
+    public static final int LIB_PLAY_SERVICES_REQUEST_CODE = 1004;
+    public static final int LIB_CONNECTION_REQUEST_CODE = 1005;
 
+    private ProgressBar progressBar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,7 +91,7 @@ public class TappingTest extends Activity implements Sheets.Host {
         if (appendage == Sheets.TestType.LH_TAP)  {
             setContentView(R.layout.left_hand_test);
             TextView handText = (TextView) findViewById(R.id.displayText);
-            handText.setText("Left Hand\nTrial " + "\n" + trialNum + " of " + trialOutOf);
+            handText.setText("Left Hand\nTrial " + trialNum + " of " + trialOutOf);
         } else if (appendage == Sheets.TestType.RH_TAP) {
             setContentView(R.layout.right_hand_test);
             TextView handText = (TextView) findViewById(R.id.displayText);
@@ -107,6 +114,8 @@ public class TappingTest extends Activity implements Sheets.Host {
         }
 
 
+        pref = getApplicationContext().getSharedPreferences("TRIALS",
+                Context.MODE_PRIVATE);
         Log.d("TAP", "about to set onClickListener");
         tap = (Button) findViewById(R.id.tap);
         tap.setOnClickListener(new View.OnClickListener() {
@@ -244,34 +253,38 @@ public class TappingTest extends Activity implements Sheets.Host {
             Intent resultIntent = new Intent();
             resultIntent.putExtra(KEY_SCORE, (float) totalTaps);
             setResult(RESULT_OK, resultIntent);
+            SharedPreferences.Editor editor = pref.edit();
+            editor.putInt("TRIAL_" + trialNum, totalTaps);
+            editor.commit();
+            Intent resultsPageIntent = new Intent(TappingTest.this, TrialResultsPage.class);
+            resultsPageIntent.putExtra(KEY_TRIAL_OUT_OF, trialOutOf);
+            resultsPageIntent.putExtra(KEY_APPENDAGE, appendage);
+            startActivity(resultsPageIntent);
+            finish();
+        } else {
+            Intent intent = new Intent(TappingTest.this, PracticeResultPage.class);
+            intent.putExtra("TAPS", totalTaps);
+            startActivity(intent);
+            finish();
         }
-
-        Intent intent = new Intent(TappingTest.this, TrialResult.class);
-
-        if(finished)
-            intent.putExtra("FINISH", true);
-        intent.putExtra("TAPS", totalTaps);
-
-        startActivity(intent);
-
-
-        finish();
-
     }
 
     @Override
     public int getRequestCode(Sheets.Action action) {
         switch (action) {
-            case REQUEST_PERMISSIONS:
-                return 1000;
             case REQUEST_ACCOUNT_NAME:
-                return 1001;
-            case REQUEST_PLAY_SERVICES:
-                return 1002;
+                return LIB_ACCOUNT_NAME_REQUEST_CODE;
             case REQUEST_AUTHORIZATION:
-                return 1003;
+                return LIB_AUTHORIZATION_REQUEST_CODE;
+            case REQUEST_PERMISSIONS:
+                return LIB_PERMISSION_REQUEST_CODE;
+            case REQUEST_PLAY_SERVICES:
+                return LIB_PLAY_SERVICES_REQUEST_CODE;
+            case REQUEST_CONNECTION_RESOLUTION:
+                return LIB_CONNECTION_REQUEST_CODE;
+            default:
+                return -1;
         }
-        return 0;
     }
 
     @Override
@@ -292,7 +305,7 @@ public class TappingTest extends Activity implements Sheets.Host {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        sheet.onActivityResult(requestCode, resultCode, data);
+        this.sheet.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override

@@ -13,4 +13,13 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark436</item>
         <item name="colorAccent">@color/colorAccent436</item>
     </style>
+
+    <style name="AppTheme.ColorBlind.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.ColorBlind.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.ColorBlind.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>
