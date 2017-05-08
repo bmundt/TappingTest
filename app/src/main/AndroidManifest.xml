@@ -40,6 +40,18 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <!-- category android:name="android.intent.category.DEFAULT" / -->
             </intent-filter>
+            <intent-filter>
+                <action android:name="edu.umd.cmsc436.tap.hand.action.PRACTICE" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <!-- category android:name="android.intent.category.DEFAULT" / -->
+            </intent-filter>
+            <intent-filter>
+                <action android:name="edu.umd.cmsc436.tap.foot.action.PRACTICE" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <!-- category android:name="android.intent.category.DEFAULT" / -->
+            </intent-filter>
         </activity>
         <activity
             android:name=".TappingPractice"
@@ -51,7 +63,14 @@
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="edu.umd.cmsc436.tap.action.TRIAL" />
-
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="edu.umd.cmsc436.tap.hand.action.TRIAL"/>
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="edu.umd.cmsc436.tap.foot.action.TRIAL"/>
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>

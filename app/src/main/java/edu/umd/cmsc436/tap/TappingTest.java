@@ -300,6 +300,7 @@ public class TappingTest extends Activity implements Sheets.Host {
         resultsPageIntent.putExtra(KEY_TRIAL_OUT_OF, trialOutOf);
         resultsPageIntent.putExtra(KEY_APPENDAGE, appendage);
         startActivity(resultsPageIntent);
+        finish();
     }
 
 
