@@ -21,6 +21,9 @@ import android.widget.TextView;
 
 import com.google.api.services.sheets.v4.model.Sheet;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+
 import static edu.umd.cmsc436.frontendhelper.TrialMode.KEY_APPENDAGE;
 import static edu.umd.cmsc436.frontendhelper.TrialMode.KEY_PATIENT_ID;
 import static edu.umd.cmsc436.frontendhelper.TrialMode.KEY_SCORE;
@@ -61,6 +64,11 @@ public class TappingTest extends Activity implements Sheets.Host {
     private final String MAIN_SHEET_ID = "1YvI3CjS4ZlZQDYi5PaiA7WGGcoCsZfLoSFM0IdvdbDU";
     private final String PRIVATE_SHEET_ID = "1MU87u75_qx35qb6TdtizRBeOH1fkO76ufzR47bfZaRQ";
 
+    private ArrayList<Float> timeBetweenTaps = new ArrayList<Float>();
+    private Long timePrevTap;
+    private Long currentTimeLeft;
+    private boolean timerComplete;
+
     public static final int LIB_ACCOUNT_NAME_REQUEST_CODE = 1001;
     public static final int LIB_AUTHORIZATION_REQUEST_CODE = 1002;
     public static final int LIB_PERMISSION_REQUEST_CODE = 1003;
@@ -96,6 +104,10 @@ public class TappingTest extends Activity implements Sheets.Host {
                     editor.remove("TRIAL_" + i);
                 editor.commit();
             }
+            timePrevTap = -1L;
+            timeBetweenTaps = new ArrayList<Float>();
+            timerComplete = false;
+
         } else {
             appendage = (Sheets.TestType) intent.getSerializableExtra(KEY_APPENDAGE);
         }
@@ -176,6 +188,14 @@ public class TappingTest extends Activity implements Sheets.Host {
         } else {
             taps++;
         }
+
+        if (!timerComplete) {
+            if (timePrevTap == -1) {
+                timeBetweenTaps.add(-1F);
+            } else {
+                timeBetweenTaps.add(new Float(timePrevTap - currentTimeLeft));
+            }
+        }
     }
 
     public void questionMark(View v) {
@@ -204,7 +224,7 @@ public class TappingTest extends Activity implements Sheets.Host {
         taps = 0;
         progressBar.setProgress(0);
         // write an incompletet trial to the sheets
-        sheet.writeTrials(appendage, patientId, numTaps);
+        sheet.writeTrials(appendage, patientId, changeToFloatArray(timeBetweenTaps));
         restart.setMessage("This test has been canceled. Please retry it again");
         restart.setButton(AlertDialog.BUTTON_NEUTRAL, "Got it",
                 new DialogInterface.OnClickListener() {
@@ -227,22 +247,26 @@ public class TappingTest extends Activity implements Sheets.Host {
     }
 
     private void createCountdownTimer(final long timeRemaining) {
-        timer = new CountDownTimer(timeRemaining  * 1000, 1000) {
+        timer = new CountDownTimer(timeRemaining  * 1000, 1) {
             @Override
             public void onTick(long millisUntilFinished) {
                 secondsRemaining = millisUntilFinished / 1000;
-                numTaps[TIME_LIMIT - ((int) secondsRemaining) - 1] = taps;
-                Log.d("TAPS", "wrote " + taps + " taps at position" + (TIME_LIMIT - ((int) secondsRemaining) - 1));
                 timeLeft.setText("Seconds remaining: " + secondsRemaining);
+                //numTaps[TIME_LIMIT - ((int) secondsRemaining) - 1] = taps;
+                
+                Log.d("TAPS", "wrote " + taps + " taps at position" + (TIME_LIMIT - ((int) secondsRemaining) - 1));
                 updateProgressBar((int) millisUntilFinished);
+                currentTimeLeft = millisUntilFinished;
             }
 
             @Override
             public void onFinish() {
+                timerComplete = true;
                 totalTaps = taps;
                 // set the values for the different trials
                 timeLeft.setText("Total Taps: " + totalTaps);
-                numTaps[TIME_LIMIT - 1] = totalTaps;
+                // set number of taps to be first column to be written to db
+                timeBetweenTaps.set(0, new Float(totalTaps));
                 Log.d("TAPS", "wrote " + taps + " taps at position" + (TIME_LIMIT - 1));
 //                intent.putExtra("score", new Float(totalTaps));
                 testFinished();
@@ -253,7 +277,7 @@ public class TappingTest extends Activity implements Sheets.Host {
     private void testFinished() {
         if (!practiceMode) {
             Log.d("SHEETS", patientId);
-            sheet.writeTrials(appendage, patientId, numTaps);
+            sheet.writeTrials(appendage, patientId, changeToFloatArray(timeBetweenTaps));
         } else {
             Intent intent = new Intent(TappingTest.this, PracticeResultPage.class);
             intent.putExtra("TAPS", totalTaps);
@@ -300,6 +324,7 @@ public class TappingTest extends Activity implements Sheets.Host {
         resultsPageIntent.putExtra(KEY_TRIAL_OUT_OF, trialOutOf);
         resultsPageIntent.putExtra(KEY_APPENDAGE, appendage);
         startActivity(resultsPageIntent);
+        finish();
     }
 
 
@@ -326,6 +351,14 @@ public class TappingTest extends Activity implements Sheets.Host {
 
         progressBar.setProgress(11000-millisUntilFinished);
 
+    }
+
+    private float[] changeToFloatArray(ArrayList<Float> floatArrayList) {
+        float[] arr = new float[floatArrayList.size()];
+        for (int i = 0; i < floatArrayList.size(); i++) {
+            arr[i] = floatArrayList.get(i);
+        }
+        return arr;
     }
 }
 
