@@ -282,6 +282,7 @@ public class TappingTest extends Activity implements Sheets.Host {
                 testFinished();
             }
         };
+        currentTimeLeft = (1000L * timeRemaining);
         Log.d("TAPS", "countdown timer created with " + (1000 * timeRemaining) + " miliseconds");
     }
 
