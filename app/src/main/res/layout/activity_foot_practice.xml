@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="6"
+    android:orientation="vertical"
+    tools:context="edu.umd.cmsc436.tap.FootPractice">
+
+    <TextView
+        android:textSize="30dp"
+        android:gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="2"
+        android:textStyle="bold"
+        android:text="Please choose which foot you would like to practice with"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_weight="4"
+        android:weightSum="2">
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:padding="10dp"
+            android:textSize="20sp"
+            android:text="Left Foot Tapping"
+            android:layout_centerInParent="true"
+            android:id="@+id/LF_practice_btn" />
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:padding="10dp"
+            android:textSize="20sp"
+            android:text="Right Foot Tapping"
+            android:id="@+id/RF_practice_btn" />
+    </LinearLayout>
+
+</LinearLayout>

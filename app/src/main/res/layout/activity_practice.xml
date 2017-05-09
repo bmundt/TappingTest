@@ -4,6 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="edu.umd.cmsc436.tap.Practice">
+    tools:context="edu.umd.cmsc436.tap.HandPractice">
 
 </android.support.constraint.ConstraintLayout>

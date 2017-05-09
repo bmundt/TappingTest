@@ -29,14 +29,12 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <!-- category android:name="android.intent.category.DEFAULT"/ -->
             </intent-filter>
-
             <intent-filter>
                 <action android:name="edu.umd.cmsc436.tap.hand.action.HELP" />
 
                 <category android:name="android.intent.category.DEFAULT" />
                 <!-- category android:name="android.intent.category.DEFAULT"/ -->
             </intent-filter>
-
             <intent-filter>
                 <action android:name="edu.umd.cmsc436.tap.foot.action.HELP" />
 
@@ -45,7 +43,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Practice"
+            android:name=".HandPractice"
             android:configChanges="orientation"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -56,11 +54,6 @@
             </intent-filter>
             <intent-filter>
                 <action android:name="edu.umd.cmsc436.tap.hand.action.PRACTICE" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-            <intent-filter>
-                <action android:name="edu.umd.cmsc436.tap.foot.action.PRACTICE" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
@@ -96,7 +89,13 @@
         <activity
             android:name=".TrialResultsPage"
             android:label="@string/title_activity_trial_results_page"
-            android:theme="@style/AppTheme.ColorBlind.NoActionBar"></activity>
+            android:theme="@style/AppTheme.ColorBlind.NoActionBar" />
+        <activity android:name=".FootPractice">
+            <intent-filter>
+                <action android:name="edu.umd.cmsc436.tap.foot.action.PRACTICE" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

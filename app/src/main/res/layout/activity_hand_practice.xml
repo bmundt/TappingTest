@@ -5,27 +5,31 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:weightSum="10"
-    tools:context="edu.umd.cmsc436.tap.Practice">
+    android:weightSum="6"
+    tools:context="edu.umd.cmsc436.tap.HandPractice">
 
     <TextView
-        android:textSize="40dp"
+        android:textSize="30dp"
         android:gravity="center"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="2"
-        android:text="Please choose which test you would like to practice"/>
+        android:textStyle="bold"
+        android:text="Please choose which hand you would like to practice with"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="4"
+        android:layout_weight="6"
         android:weightSum="2"
         android:orientation="horizontal">
 
         <Button
             android:layout_width="0dp"
             android:layout_weight="1"
+            android:gravity="center"
+            android:padding="10dp"
+            android:textSize="20sp"
             android:layout_height="match_parent"
             android:text="Left Hand Tapping"
             android:id="@+id/LH_practice_btn"
@@ -33,34 +37,13 @@
         <Button
             android:layout_width="0dp"
             android:layout_weight="1"
+            android:gravity="center"
+            android:padding="10dp"
+            android:textSize="20sp"
             android:layout_height="match_parent"
             android:id="@+id/RH_practice_btn"
             android:text="Right Hand Tapping"
             />
 
     </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_weight="4"
-        android:weightSum="2">
-
-        <Button
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="match_parent"
-            android:text="Left Foot Tapping"
-            android:layout_centerInParent="true"
-            android:id="@+id/LF_practice_btn" />
-
-        <Button
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="match_parent"
-            android:text="Right Foot Tapping"
-            android:id="@+id/RF_practice_btn" />
-    </LinearLayout>
-
 </LinearLayout>

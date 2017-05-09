@@ -189,11 +189,13 @@ public class TappingTest extends Activity implements Sheets.Host {
             taps++;
         }
 
-        if (!timerComplete) {
-            if (timePrevTap == -1) {
-                timeBetweenTaps.add(-1F);
-            } else {
-                timeBetweenTaps.add(new Float(timePrevTap - currentTimeLeft));
+        if (!practiceMode) {
+            if (!timerComplete) {
+                if (timePrevTap == -1) {
+                    timeBetweenTaps.add(-1F);
+                } else {
+                    timeBetweenTaps.add(new Float(timePrevTap - currentTimeLeft));
+                }
             }
         }
     }
@@ -224,7 +226,8 @@ public class TappingTest extends Activity implements Sheets.Host {
         taps = 0;
         progressBar.setProgress(0);
         // write an incompletet trial to the sheets
-        sheet.writeTrials(appendage, patientId, changeToFloatArray(timeBetweenTaps));
+        if (!practiceMode)
+            sheet.writeTrials(appendage, patientId, changeToFloatArray(timeBetweenTaps));
         restart.setMessage("This test has been canceled. Please retry it again");
         restart.setButton(AlertDialog.BUTTON_NEUTRAL, "Got it",
                 new DialogInterface.OnClickListener() {
@@ -253,7 +256,7 @@ public class TappingTest extends Activity implements Sheets.Host {
                 secondsRemaining = millisUntilFinished / 1000;
                 timeLeft.setText("Seconds remaining: " + secondsRemaining);
                 //numTaps[TIME_LIMIT - ((int) secondsRemaining) - 1] = taps;
-                
+
                 Log.d("TAPS", "wrote " + taps + " taps at position" + (TIME_LIMIT - ((int) secondsRemaining) - 1));
                 updateProgressBar((int) millisUntilFinished);
                 currentTimeLeft = millisUntilFinished;
@@ -266,7 +269,9 @@ public class TappingTest extends Activity implements Sheets.Host {
                 // set the values for the different trials
                 timeLeft.setText("Total Taps: " + totalTaps);
                 // set number of taps to be first column to be written to db
-                timeBetweenTaps.set(0, new Float(totalTaps));
+                if (!practiceMode) {
+                    timeBetweenTaps.set(0, new Float(totalTaps));
+                }
                 Log.d("TAPS", "wrote " + taps + " taps at position" + (TIME_LIMIT - 1));
 //                intent.putExtra("score", new Float(totalTaps));
                 testFinished();
