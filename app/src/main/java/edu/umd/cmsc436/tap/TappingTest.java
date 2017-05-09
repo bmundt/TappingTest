@@ -65,8 +65,8 @@ public class TappingTest extends Activity implements Sheets.Host {
     private final String PRIVATE_SHEET_ID = "1MU87u75_qx35qb6TdtizRBeOH1fkO76ufzR47bfZaRQ";
 
     private ArrayList<Float> timeBetweenTaps = new ArrayList<Float>();
-    private Long timePrevTap;
-    private Long currentTimeLeft;
+    private Long timePrevTap = -1L;
+    private Long currentTimeLeft = (1000L * TIME_LIMIT);
     private boolean timerComplete;
 
     public static final int LIB_ACCOUNT_NAME_REQUEST_CODE = 1001;
@@ -92,6 +92,7 @@ public class TappingTest extends Activity implements Sheets.Host {
                 Context.MODE_PRIVATE);
 
         if (!practiceMode) {
+            Log.d("TAPS", "practice mode is false");
             appendage = getAppendage(intent);
             trialNum = getTrialNum(intent);
             trialOutOf = getTrialOutOf(intent);
@@ -178,6 +179,7 @@ public class TappingTest extends Activity implements Sheets.Host {
     }
 
     public void tapButton(View v) {
+        Log.d("TAPS", "button tapped");
         if (!timerStarted) { // only start timer if not already started
             questionMark.setAlpha(.5f);
             questionMark.setClickable(false);
@@ -191,11 +193,13 @@ public class TappingTest extends Activity implements Sheets.Host {
 
         if (!practiceMode) {
             if (!timerComplete) {
-                if (timePrevTap == -1) {
+                Log.d("TAPS", "time prev tap is: " + timePrevTap);
+                if (timePrevTap == -1L) {
                     timeBetweenTaps.add(-1F);
                 } else {
                     timeBetweenTaps.add(new Float(timePrevTap - currentTimeLeft));
                 }
+                timePrevTap = currentTimeLeft;
             }
         }
     }
@@ -274,9 +278,11 @@ public class TappingTest extends Activity implements Sheets.Host {
                 }
                 Log.d("TAPS", "wrote " + taps + " taps at position" + (TIME_LIMIT - 1));
 //                intent.putExtra("score", new Float(totalTaps));
+                Log.d("TAPS", "test finished");
                 testFinished();
             }
         };
+        Log.d("TAPS", "countdown timer created with " + (1000 * timeRemaining) + " miliseconds");
     }
 
     private void testFinished() {
@@ -347,6 +353,7 @@ public class TappingTest extends Activity implements Sheets.Host {
     @Override
     public void onBackPressed() {
         // do the cancel stuff Activity.RESULT_CANCELLED
+        Log.d("TAPS", "back button pressed");
         Intent resultIntent = new Intent();
         setResult(RESULT_CANCELED, resultIntent);
         finish();
