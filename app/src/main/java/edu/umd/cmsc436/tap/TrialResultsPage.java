@@ -93,9 +93,11 @@ public class TrialResultsPage extends AppCompatActivity {
             score.setText("-");
 
         return convertView;
-//        TextView dummy = new TextView(context);
-//        dummy.setText(position);
-//        return dummy;
+    }
+
+    @Override
+    public void onBackPressed() {
+
     }
 
 }

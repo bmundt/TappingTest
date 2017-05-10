@@ -229,6 +229,7 @@ public class TappingTest extends Activity implements Sheets.Host {
         timeLeft.setText("Begin Tapping When Ready");
         taps = 0;
         progressBar.setProgress(0);
+        questionMark.setClickable(true);
         // write an incompletet trial to the sheets
         if (!practiceMode)
             sheet.writeTrials(appendage, patientId, changeToFloatArray(timeBetweenTaps));
@@ -236,18 +237,6 @@ public class TappingTest extends Activity implements Sheets.Host {
         restart.setButton(AlertDialog.BUTTON_NEUTRAL, "Got it",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        // somehow doing nothing is the right thing
-//                        Intent intent = new Intent(TappingTest.this, TappingTest.class);
-//                        intent.putExtra(KEY_APPENDAGE, appendage);
-//                        intent.putExtra(KEY_TRIAL_NUM, trialNum);
-//                        intent.putExtra(KEY_TRIAL_OUT_OF, trialOutOf);
-//                        intent.putExtra(KEY_PATIENT_ID, patientId);
-//                        startActivity(intent);
-//                        Intent resultIntent = new Intent();
-//                        resultIntent.putExtra(KEY_SCORE, 0.00F);
-//                        setResult(RESULT_OK, resultIntent);
-//                        dialog.dismiss();
-//                        finish();
                     }
                 });
         restart.show();
@@ -326,17 +315,21 @@ public class TappingTest extends Activity implements Sheets.Host {
 
         Log.d("SHEETS", "NumTaps last 2: " + numTaps[8] + "," + numTaps[9]);
         Log.d("SHEETS", "finished writing trial");
-        Intent resultIntent = new Intent();
-        resultIntent.putExtra(KEY_SCORE, (float) totalTaps);
-        setResult(RESULT_OK, resultIntent);
-        SharedPreferences.Editor editor = pref.edit();
-        editor.putInt("TRIAL_" + trialNum, totalTaps);
-        editor.commit();
-        Intent resultsPageIntent = new Intent(TappingTest.this, TrialResultsPage.class);
-        resultsPageIntent.putExtra(KEY_TRIAL_OUT_OF, trialOutOf);
-        resultsPageIntent.putExtra(KEY_APPENDAGE, appendage);
-        startActivity(resultsPageIntent);
-        finish();
+
+        // so the cancel button doesn't leave
+        if (timerComplete) {
+            Intent resultIntent = new Intent();
+            resultIntent.putExtra(KEY_SCORE, (float) totalTaps);
+            setResult(RESULT_OK, resultIntent);
+            SharedPreferences.Editor editor = pref.edit();
+            editor.putInt("TRIAL_" + trialNum, totalTaps);
+            editor.commit();
+            Intent resultsPageIntent = new Intent(TappingTest.this, TrialResultsPage.class);
+            resultsPageIntent.putExtra(KEY_TRIAL_OUT_OF, trialOutOf);
+            resultsPageIntent.putExtra(KEY_APPENDAGE, appendage);
+            startActivity(resultsPageIntent);
+            finish();
+        }
     }
 
 
